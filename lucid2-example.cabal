@@ -1,0 +1,32 @@
+cabal-version:      3.0
+name:               lucid2-example
+version:            0.1.0.0
+-- synopsis:
+-- description:
+license:            NONE
+author:             Daniel Díaz
+maintainer:         diaz_carrete@yahoo.com
+-- copyright:
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+-- extra-source-files:
+
+common warnings
+    ghc-options: -Wall
+
+executable lucid2-example
+    import:           warnings
+    main-is:          Main.hs
+    -- other-modules:
+    -- other-extensions:
+    build-depends:
+        base,
+        lucid2,
+        wai,
+        http-types,
+        warp,
+        bytestring,
+        text
+
+    hs-source-dirs:   app
+    default-language: Haskell2010
