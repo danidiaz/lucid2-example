@@ -1,15 +1,15 @@
 {-# LANGUAGE OverloadedStrings, ExtendedDefaultRules #-}
 module Main where
 
-import Lucid
+-- import Lucid
 import Network.Wai
 import Network.Wai.Handler.Warp (run)
 import Network.HTTP.Types (status200)
 
 app :: Application
-app _ f = f (responseLBS status200 [] "foo 2")
+app _ f = f (responseLBS status200 [] "foo 13")
 
 main :: IO ()
 main = do
-    putStrLn "Hello, Haskell! ---333"
+    putStrLn "Hello, Haskell!"
     run 8000 app
