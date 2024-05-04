@@ -4,9 +4,10 @@
 
 module Main where
 
+import Control.Exception (throwIO)
 import Data.Function ((&))
 import Lucid
-import Network.HTTP.Types (status200)
+import Network.HTTP.Types (hContentType, status200)
 import Network.Wai (Application, pathInfo, responseFile, responseLBS)
 import Network.Wai.Handler.Warp (run)
 
@@ -18,13 +19,17 @@ page = do
       link_ [rel_ "stylesheet", href_ "output.css"]
       pure ()
     body_ do
-      div_ [class_ "m-auto bg-emerald-300 w-3/4"] "foo"
+      div_ [class_ "m-auto bg-emerald-300 w-1/4"] "foo"
 
 app :: Application
 app req f =
   case req & pathInfo of
-    ["output.css"] -> f (responseFile status200 [] "./output.css" Nothing)
-    _ -> f (responseLBS status200 [] (Lucid.renderBS page))
+    [] ->
+      f do responseLBS status200 [(hContentType, "text/html; charset=utf-8")] do Lucid.renderBS page
+    ["output.css"] ->
+      f do responseFile status200 [(hContentType, "text/css")] "./output.css" Nothing
+    _ ->
+      throwIO do userError "unknown path"
 
 main :: IO ()
 main = run 8000 app
