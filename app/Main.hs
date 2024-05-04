@@ -7,7 +7,7 @@ module Main where
 import Data.Function ((&))
 import Lucid
 import Network.HTTP.Types (status200)
-import Network.Wai
+import Network.Wai (Application, pathInfo, responseFile, responseLBS)
 import Network.Wai.Handler.Warp (run)
 
 page :: Html ()
