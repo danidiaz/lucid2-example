@@ -6,6 +6,7 @@ module Main where
 
 import Control.Exception (throwIO)
 import Data.Function ((&))
+import Data.Text
 import Lucid
 import Network.HTTP.Types (hContentType, status200)
 import Network.Wai (Application, pathInfo, responseFile, responseLBS)
@@ -19,7 +20,13 @@ page = do
       link_ [rel_ "stylesheet", href_ "output.css"]
       pure ()
     body_ do
-      div_ [class_ "m-auto bg-emerald-300 w-1/4"] "foo"
+      div_ [class_ "m-auto bg-emerald-300 w-1/4"] do
+        p_ "foo"
+        p_ do toHtml someText
+        foldMap p_ ["this", "is", "monoidally", "appended"]
+
+someText :: Text
+someText = "sometext"
 
 app :: Application
 app req f =
